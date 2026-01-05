@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { z } from 'zod';
 import { toast } from '@/hooks/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const emailSchema = z.string().trim().email({ message: "Please enter a valid email" });
 
@@ -26,10 +27,28 @@ const WaitlistForm = () => {
 
     setIsSubmitting(true);
     
-    // Simulate API call - replace with actual backend when Cloud is enabled
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    const { error } = await supabase
+      .from('waitlist')
+      .insert({ email: result.data });
     
     setIsSubmitting(false);
+    
+    if (error) {
+      if (error.code === '23505') {
+        toast({
+          title: "Already registered",
+          description: "This email is already on the waitlist.",
+        });
+      } else {
+        toast({
+          title: "Something went wrong",
+          description: "Please try again later.",
+          variant: "destructive",
+        });
+      }
+      return;
+    }
+    
     setIsSuccess(true);
     setEmail('');
     

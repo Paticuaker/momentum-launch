@@ -1,4 +1,5 @@
 import WaitlistForm from '@/components/WaitlistForm';
+import goatLogo from '@/assets/goat-logo.png';
 
 const Index = () => {
   return (
@@ -23,8 +24,17 @@ const Index = () => {
       {/* Main content */}
       <main className="relative z-10 flex-1 flex flex-col items-center justify-center px-6 py-20">
         <div className="max-w-3xl mx-auto text-center">
+          {/* Logo */}
+          <div className="animate-fade-in-up mb-8">
+            <img 
+              src={goatLogo} 
+              alt="Otazua logo" 
+              className="w-20 h-20 mx-auto invert opacity-90"
+            />
+          </div>
+
           {/* Tagline */}
-          <div className="animate-fade-in-up">
+          <div className="animate-fade-in-up delay-100">
             <span className="inline-block px-4 py-1.5 text-xs font-body tracking-[0.2em] uppercase text-muted-foreground border border-border/50 rounded-full mb-8">
               Coming Soon
             </span>
